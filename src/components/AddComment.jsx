@@ -1,46 +1,47 @@
-import { Component } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Component } from "react";
+import { Button, Form } from "react-bootstrap";
+import { STRIVESCHOOL_APIKEY } from "../data/api_keys";
 
 class AddComment extends Component {
   state = {
     comment: {
-      comment: '',
+      comment: "",
       rate: 1,
       elementId: this.props.asin,
     },
-  }
+  };
 
   sendComment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       let response = await fetch(
-        'https://striveschool-api.herokuapp.com/api/comments',
+        "https://striveschool-api.herokuapp.com/api/comments",
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify(this.state.comment),
           headers: {
-            'Content-type': 'application/json',
-            Authorization: 'Bearer your-auth-token-goes-here',
+            "Content-type": "application/json",
+            Authorization: "Bearer " + STRIVESCHOOL_APIKEY,
           },
         }
-      )
+      );
       if (response.ok) {
-        alert('Comment was sent!')
+        alert("Comment was sent!");
         this.setState({
           comment: {
-            comment: '',
+            comment: "",
             rate: 1,
             elementId: this.props.asin,
           },
-        })
+        });
       } else {
-        console.log('error')
-        alert('something went wrong')
+        console.log("error");
+        alert("something went wrong");
       }
     } catch (error) {
-      console.log('error')
+      console.log("error");
     }
-  }
+  };
 
   render() {
     return (
@@ -88,8 +89,8 @@ class AddComment extends Component {
           </Button>
         </Form>
       </div>
-    )
+    );
   }
 }
 
-export default AddComment
+export default AddComment;
